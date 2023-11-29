@@ -5,7 +5,7 @@ import com.tac.nba_companion.domain.entities.Team
 import com.tac.nba_companion.domain.repository.ITeamRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetTeamListUseCase(private val teamRepository: ITeamRepository) {
-    operator fun invoke(): Flow<Resource<List<Team>>> = teamRepository.teams();
+class GetTeamListUseCase(private val repository: ITeamRepository) {
+    fun execute(): Flow<Resource<List<Team>>> = repository.getTeams();
 
 }

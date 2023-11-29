@@ -11,10 +11,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.tac.nba_companion.data.datasource.TeamRemoteDataSource
+import com.tac.nba_companion.data.network.dto.TeamDtoMapper
+import com.tac.nba_companion.data.repository.TeamRepositoryImpl
+import com.tac.nba_companion.domain.usecases.GetTeamListUseCase
 import com.tac.nba_companion.ui.theme.NbaCompanionTheme
+import com.tac.nba_companion.viewmodel.TeamsViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val vm = TeamsViewModel(
+            getTeamListUseCase = GetTeamListUseCase(
+                repository = TeamRepositoryImpl(
+                    teamDtoMapper = TeamDtoMapper(),
+                    dataSource =  TeamRemoteDataSource()
+                )
+            )
+        )
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -24,8 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
-
+                    TeamsScreen(viewModel = vm)
                 }
             }
         }

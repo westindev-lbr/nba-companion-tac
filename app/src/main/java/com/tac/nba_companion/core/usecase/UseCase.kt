@@ -1,8 +1,6 @@
 package com.tac.nba_companion.core.usecase
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-
+/*
 abstract class UseCase<out Type, in Params> where Type : Any {
 
     abstract suspend fun run(params: Params): Either<Failure, Type>
@@ -20,12 +18,14 @@ abstract class UseCase<out Type, in Params> where Type : Any {
         }
     }
 
-    /**
+    */
+/**
      * class Helper qui représente Aucun
      * Paramètre quand le use case n'en
      * a pas besoin.
      *
      * @see UseCase
-     */
+     *//*
+
     class None
-}
+}*/

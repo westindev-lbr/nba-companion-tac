@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Nba-Companion</string>
+    <string name="error_resource_not_found">Erreur ressource non trouvé</string>
+    <string name="error_service_unavailable">Erreur service indisponible</string>
+    <string name="error_server">Erreur serveur</string>
+    <string name="error_network_unavailable">Erreur connexion internet indisponible</string>
+    <string name="error_general">Une erreur est survenue</string>
 </resources>
