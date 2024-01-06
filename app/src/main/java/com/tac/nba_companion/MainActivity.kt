@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Scaffold(
-                        topBar = { mTopAppBar() },
+                        topBar = { NbaTopAppBar() },
                         content = { paddingValues ->  Box(modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)) },
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun mTopAppBar() {
+fun NbaTopAppBar() {
         TopAppBar(
             colors = TopAppBarDefaults.smallTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
