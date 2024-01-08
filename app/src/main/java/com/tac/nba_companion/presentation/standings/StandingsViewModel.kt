@@ -1,4 +1,6 @@
 package com.tac.nba_companion.presentation.standings
 
-class StandingsViewModel {
+import androidx.lifecycle.ViewModel
+
+class StandingsViewModel: ViewModel() {
 }
