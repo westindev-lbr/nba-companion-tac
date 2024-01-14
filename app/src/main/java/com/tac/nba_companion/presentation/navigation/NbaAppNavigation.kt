@@ -36,7 +36,7 @@ fun NbaAppNavigation() {
 // remember permet de conserver l'état des variables de l'objet après la recomposition
     val bottomNavigationItem = remember {
         listOf(
-            BottomNavigationItem(icon = R.drawable.ico_news, text = "Home"),
+            BottomNavigationItem(icon = R.drawable.ico_news, text = "Teams"),
             BottomNavigationItem(icon = R.drawable.ico_standings, text = "Standings"),
             BottomNavigationItem(icon = R.drawable.ico_scores, text = "Results"),
             BottomNavigationItem(icon = R.drawable.ico_pref, text = "Preference"),
@@ -102,7 +102,9 @@ fun NbaAppNavigation() {
         ) {
             composable(route = Route.HomeScreen.route) {
                 val viewModel: HomeViewModel = viewModel()
-                HomeScreen()
+                HomeScreen(
+                    teams = viewModel.teamsList
+                )
             }
 
             composable(route = Route.StandingsScreen.route) {

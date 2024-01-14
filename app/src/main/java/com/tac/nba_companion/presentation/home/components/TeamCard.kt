@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,9 +29,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tac.nba_companion.R
+import com.tac.nba_companion.domain.entities.Team
 
 @Composable
-fun NewsCard(
+fun TeamCard(
 ) {
     Card(
         //shape = MaterialTheme.shapes.medium,
@@ -81,7 +82,10 @@ fun NewsCard(
 }
 
 @Composable
-fun CardElevation() {
+fun CardElevation(
+    modifier: Modifier = Modifier,
+    team: Team
+) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
@@ -94,29 +98,30 @@ fun CardElevation() {
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+            Surface(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.size(width = 100.dp, height = 140.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.img_nba_news),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(2f),
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Center
             ) {
-                Surface(
-                    shape = RoundedCornerShape(24.dp),
-                    modifier = Modifier.wrapContentSize(),
-                    color = MaterialTheme.colorScheme.inverseSurface
-                ) {
-                    Text(
-                        text = "Celtics",
-                        fontSize = 12.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Title",
+                    text = team.name,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -135,16 +140,7 @@ fun CardElevation() {
 
             }
 
-            Surface(
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.size(width = 100.dp, height = 140.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.img_nba_news),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null
-                )
-            }
+
         }
     }
 }
@@ -153,12 +149,12 @@ fun CardElevation() {
 
 @Preview
 @Composable
-fun NewsCardPreview() {
-    NewsCard()
+fun TeamCardPreview() {
+    TeamCard()
 }
 
 @Preview
 @Composable
 fun CardElevationPreviw() {
-    CardElevation()
+    CardElevation(team = Team(0, "Dallas Mavericks"))
 }
