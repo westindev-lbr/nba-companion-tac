@@ -12,15 +12,13 @@ import com.tac.nba_companion.ui.theme.NbaCompanionTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NbaTopAppBar(title : String) {
+fun NbaTopAppBar(title: String) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
-        title = {
-            Text(title)
-        }
+        title = { Text(title) }
     )
 }
 
@@ -30,6 +28,6 @@ fun NbaTopAppBar(title : String) {
 @Composable
 fun NbaTopAppBarPreview() {
     NbaCompanionTheme {
-        NbaTopAppBar( "NBA Companion" )
+        NbaTopAppBar("NBA Companion")
     }
 }
