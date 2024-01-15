@@ -9,7 +9,6 @@ import com.tac.nba_companion.domain.entities.Team
 
 @Composable
 fun TeamsCardList(
-    modifier: Modifier = Modifier,
     teams: List<Team>,
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize(),
@@ -17,20 +16,17 @@ fun TeamsCardList(
         items(
             count = teams.size
         ) {
-            teams[it]?.let { team ->
-                CardElevation(team = team)
-            }
+            CardElevation(team = teams[it])
         }
     }
 }
-
-val team1 : Team = Team(6, "Dallas Mavericks", location = "Dallas", abbreviation = "DAL", logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png" )
-val team2 : Team = Team(5, "Cleveland Cavaliers", location = "Cleveland", abbreviation = "CLE", logo = "https://a.espncdn.com/i/teamlogos/nba/500/cle.png" )
-val teamsList: List<Team> = listOf(team1, team2)
 
 @Preview
 @Composable
 fun TeamsCardListPreview(
 ) {
+    val team1 = Team(6, "Dallas Mavericks", location = "Dallas", abbreviation = "DAL", logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png" )
+    val team2 = Team(5, "Cleveland Cavaliers", location = "Cleveland", abbreviation = "CLE", logo = "https://a.espncdn.com/i/teamlogos/nba/500/cle.png" )
+    val teamsList: List<Team> = listOf(team1, team2)
     TeamsCardList(teams = teamsList )
 }

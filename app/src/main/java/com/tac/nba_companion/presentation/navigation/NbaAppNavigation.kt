@@ -63,7 +63,7 @@ fun NbaAppNavigation() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar =  { NbaTopAppBar( "NBA Companion")},
+        topBar = { NbaTopAppBar("NBA Companion") },
         bottomBar = {
             BottomNavigation(
                 items = bottomNavigationItem,
@@ -102,9 +102,7 @@ fun NbaAppNavigation() {
         ) {
             composable(route = Route.HomeScreen.route) {
                 val viewModel: HomeViewModel = viewModel()
-                HomeScreen(
-                    teams = viewModel.teamsList
-                )
+                HomeScreen(teams = viewModel.teamsList)
             }
 
             composable(route = Route.StandingsScreen.route) {
