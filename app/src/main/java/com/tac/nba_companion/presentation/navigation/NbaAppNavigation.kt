@@ -63,9 +63,18 @@ fun NbaAppNavigation() {
             else -> 0
         }
 
+    val homeViewModel: HomeViewModel = hiltViewModel()
+
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { NbaTopAppBar("NBA Companion") },
+        topBar = {
+            NbaTopAppBar(
+                title = "NBA Companion",
+                isGridView = homeViewModel.uiState.collectAsState().value.isGridView,
+                onToggleGridView = { homeViewModel.toggleGridView() }
+            )
+        },
         bottomBar = {
             BottomNavigation(
                 items = bottomNavigationItem,
@@ -103,9 +112,8 @@ fun NbaAppNavigation() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.HomeScreen.route) {
-                val viewModel: HomeViewModel = hiltViewModel()
                 // Collecte de l'état à passer à la vue
-                val teamsState = viewModel.uiState.collectAsState().value
+                val teamsState = homeViewModel.uiState.collectAsState().value
                 HomeScreen(state = teamsState)
             }
 
