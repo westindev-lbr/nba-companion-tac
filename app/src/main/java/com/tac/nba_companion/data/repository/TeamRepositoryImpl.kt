@@ -1,8 +1,8 @@
 package com.tac.nba_companion.data.repository
 
-import android.util.Log
 import com.tac.nba_companion.core.common.ErrorType
 import com.tac.nba_companion.core.common.Resource
+import com.tac.nba_companion.core.util.ApiErrorHandler
 import com.tac.nba_companion.data.remote.EspnNbaApi
 import com.tac.nba_companion.data.remote.dto.team.TeamDtoMapper
 import com.tac.nba_companion.domain.entities.Team
@@ -40,8 +40,8 @@ class TeamRepositoryImpl @Inject constructor(
                     // Emettre la réponse
                     emit(Resource.Success(teams))
                 } else {
-                    // Gérer les cas d'érreurs
-                    Log.d("myErrorDebug", response.message())
+                    // Gérer les cas d'érreurs en fonction du code HTTP
+                    emit(ApiErrorHandler.handleErrorResponse(response))
                 }
             } catch (e: Exception) {
                 // Gstion exception
