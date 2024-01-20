@@ -19,6 +19,6 @@ class GetAllTeamsUseCase @Inject constructor(private val repository: ITeamReposi
      * rendre votre code plus intuitif et élégant.
      */
     operator fun invoke(): Flow<Resource<List<Team>>> {
-        return repository.fetchTeams()
+        return repository.getTeamsCollection()
     }
 }

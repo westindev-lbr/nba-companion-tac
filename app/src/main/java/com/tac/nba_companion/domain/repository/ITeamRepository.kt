@@ -9,5 +9,5 @@ interface ITeamRepository {
       * Resource : pour gérer deux cas possibles (succès || echec) afin d'envoyer à la vue selon le cas.
       * Flow : Permet de gérer des flux de données asynchrones.
       */
-     fun fetchTeams(): Flow<Resource<List<Team>>>
+     fun getTeamsCollection(): Flow<Resource<List<Team>>>
 }
