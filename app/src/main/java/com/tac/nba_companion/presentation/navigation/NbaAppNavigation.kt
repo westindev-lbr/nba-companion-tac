@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +31,8 @@ import com.tac.nba_companion.presentation.results.ResultsScreen
 import com.tac.nba_companion.presentation.results.ResultsViewModel
 import com.tac.nba_companion.presentation.standings.StandingsScreen
 import com.tac.nba_companion.presentation.standings.StandingsViewModel
+import com.tac.nba_companion.presentation.teamDetails.TeamDetailScreen
+import com.tac.nba_companion.presentation.teamDetails.TeamDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,9 +108,38 @@ fun NbaAppNavigation() {
                 val homeViewModel: HomeViewModel = hiltViewModel()
                 // Collecte de l'état à passer à la vue
                 val teamsState = homeViewModel.uiState.collectAsState().value
+
                 HomeScreen(
                     state = teamsState,
-                    onToggleGridView = { homeViewModel.toggleGridView() })
+                    onToggleGridView = { homeViewModel.toggleGridView() },
+                    navigateToDetails = { id ->
+                        navigateToDetails(
+                            navController = navController,
+                            teamId = id
+                        )
+                    }
+                )
+            }
+
+            composable(route = Route.TeamDetailsScreen.route) {
+                val teamDetailViewModel: TeamDetailViewModel = hiltViewModel()
+                val teamId = navController.previousBackStackEntry?.savedStateHandle?.get<Int>("teamId")
+
+                LaunchedEffect(teamId) {
+                    teamId?.let {teamId ->
+                        teamDetailViewModel.loadTeamDetail(teamId)
+                    }
+                }
+
+                val teamDetail by teamDetailViewModel.teamDetail.collectAsState()
+
+                teamDetail?.let { teamDetail ->
+                    TeamDetailScreen(
+                        team = teamDetail,
+                        navigateUp = { navController.navigateUp() },
+                    )
+                }
+
             }
 
             composable(route = Route.StandingsScreen.route) {
@@ -138,4 +170,11 @@ private fun navigateOnTap(navController: NavController, route: String) {
             launchSingleTop = true
         }
     }
+}
+
+private fun navigateToDetails(navController: NavController, teamId: Int ) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("teamId", teamId)
+    navController.navigate(
+        route = Route.TeamDetailsScreen.route
+    )
 }

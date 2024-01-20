@@ -26,7 +26,8 @@ import com.tac.nba_companion.presentation.home.components.TeamsCardList
 @Composable
 fun HomeScreen(
     state: HomeState,
-    onToggleGridView: () -> Unit
+    onToggleGridView: () -> Unit,
+    navigateToDetails: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -39,9 +40,9 @@ fun HomeScreen(
         NbaTopAppBar(title = "NBA Companion", isGridView = state.isGridView, onToggleGridView = onToggleGridView )
         if (!state.isError) {
             if (!state.isGridView) {
-                TeamsCardList(teams = state.teams)
+                TeamsCardList(teams = state.teams, onClick = navigateToDetails)
             } else {
-                TeamsCardGrid(teams = state.teams)
+                TeamsCardGrid(teams = state.teams, onClick = navigateToDetails)
             }
         } else {
             Column(

@@ -1,6 +1,7 @@
 package com.tac.nba_companion.presentation.home.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,12 +35,15 @@ import com.tac.nba_companion.domain.entities.Team
 
 @Composable
 fun CardElevation(
-    team: Team
+    team: Team,
+    onClick: (() -> Unit)? = null
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
-        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .clickable { onClick?.invoke() },
         shadowElevation = 10.dp
     ) {
         Row(
@@ -108,12 +112,15 @@ fun CardElevation(
 
 @Composable
 fun CardGridElevation(
-    team: Team
+    team: Team,
+    onClick: (() -> Unit)? = null
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
-        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .clickable { onClick?.invoke() },
         shadowElevation = 10.dp
     ) {
         Column(
