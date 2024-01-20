@@ -24,7 +24,6 @@ import com.tac.nba_companion.presentation.home.HomeScreen
 import com.tac.nba_companion.presentation.home.HomeViewModel
 import com.tac.nba_companion.presentation.navigation.components.BottomNavigation
 import com.tac.nba_companion.presentation.navigation.components.BottomNavigationItem
-import com.tac.nba_companion.presentation.navigation.components.NbaTopAppBar
 import com.tac.nba_companion.presentation.preferences.PreferencesScreen
 import com.tac.nba_companion.presentation.preferences.PreferencesViewModel
 import com.tac.nba_companion.presentation.results.ResultsScreen
@@ -63,18 +62,9 @@ fun NbaAppNavigation() {
             else -> 0
         }
 
-    val homeViewModel: HomeViewModel = hiltViewModel()
-
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            NbaTopAppBar(
-                title = "NBA Companion",
-                isGridView = homeViewModel.uiState.collectAsState().value.isGridView,
-                onToggleGridView = { homeViewModel.toggleGridView() }
-            )
-        },
         bottomBar = {
             BottomNavigation(
                 items = bottomNavigationItem,
@@ -112,11 +102,13 @@ fun NbaAppNavigation() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.HomeScreen.route) {
+                val homeViewModel: HomeViewModel = hiltViewModel()
                 // Collecte de l'état à passer à la vue
                 val teamsState = homeViewModel.uiState.collectAsState().value
-                HomeScreen(state = teamsState)
+                HomeScreen(
+                    state = teamsState,
+                    onToggleGridView = { homeViewModel.toggleGridView() })
             }
-
 
             composable(route = Route.StandingsScreen.route) {
                 val viewModel: StandingsViewModel = viewModel()
