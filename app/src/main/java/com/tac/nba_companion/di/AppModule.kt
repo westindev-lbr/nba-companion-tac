@@ -8,6 +8,8 @@ import com.tac.nba_companion.data.remote.dto.team.TeamDtoMapper
 import com.tac.nba_companion.data.repository.TeamRepositoryImpl
 import com.tac.nba_companion.domain.repository.ITeamRepository
 import com.tac.nba_companion.domain.usecases.GetAllTeamsUseCase
+import com.tac.nba_companion.presentation.common.ErrorTypeToErrorTextConverterImpl
+import com.tac.nba_companion.presentation.common.IErrorTypeToErrorTextConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,4 +58,11 @@ object AppModule {
     fun provideGetAllTeamsUseCase(teamRepository: ITeamRepository): GetAllTeamsUseCase {
         return GetAllTeamsUseCase(teamRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideErrorTypeToErrorTextConverter() : IErrorTypeToErrorTextConverter {
+        return ErrorTypeToErrorTextConverterImpl()
+    }
+
 }

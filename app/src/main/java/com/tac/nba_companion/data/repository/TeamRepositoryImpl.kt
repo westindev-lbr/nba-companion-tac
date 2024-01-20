@@ -1,5 +1,7 @@
 package com.tac.nba_companion.data.repository
 
+import android.util.Log
+import com.tac.nba_companion.core.common.ErrorType
 import com.tac.nba_companion.core.common.Resource
 import com.tac.nba_companion.data.remote.EspnNbaApi
 import com.tac.nba_companion.data.remote.dto.team.TeamDtoMapper
@@ -39,11 +41,12 @@ class TeamRepositoryImpl @Inject constructor(
                     emit(Resource.Success(teams))
                 } else {
                     // Gérer les cas d'érreurs
-                    TODO("Not yet implemented")
+                    Log.d("myErrorDebug", response.message())
                 }
             } catch (e: Exception) {
                 // Gstion exception
-                TODO("Not yet implemented")
+                //Log.d("myErrorDebug", e.message.toString())
+                emit(Resource.Error(ErrorType.Api.Network))
             }
         }
     }
