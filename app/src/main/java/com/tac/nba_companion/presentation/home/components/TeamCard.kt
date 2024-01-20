@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -94,16 +93,6 @@ fun CardElevation(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                Text(
-                    text = "Lieu : ${team.location}",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleSmall,
-                )
-
             }
         }
     }
@@ -166,17 +155,6 @@ fun CardGridElevation(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
             )
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            Text(
-                text = "Lieu : ${team.location}",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleSmall,
-            )
-
-
         }
     }
 }

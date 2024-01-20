@@ -5,9 +5,11 @@ import com.google.gson.GsonBuilder
 import com.tac.nba_companion.core.util.Constants.Companion.BASE_URL
 import com.tac.nba_companion.data.remote.EspnNbaApi
 import com.tac.nba_companion.data.remote.dto.team.TeamDtoMapper
+import com.tac.nba_companion.data.remote.dto.teamdetail.TeamDetailDtoMapper
 import com.tac.nba_companion.data.repository.TeamRepositoryImpl
 import com.tac.nba_companion.domain.repository.ITeamRepository
 import com.tac.nba_companion.domain.usecases.GetAllTeamsUseCase
+import com.tac.nba_companion.domain.usecases.GetTeamDetailUseCase
 import com.tac.nba_companion.presentation.common.ErrorTypeToErrorTextConverterImpl
 import com.tac.nba_companion.presentation.common.IErrorTypeToErrorTextConverter
 import dagger.Module
@@ -39,7 +41,6 @@ object AppModule {
             .create(EspnNbaApi::class.java)
     }
 
-
     @Singleton
     @Provides
     fun provideTeamDtoMapper(): TeamDtoMapper {
@@ -48,15 +49,27 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideTeamDetailDtoMapper(): TeamDetailDtoMapper {
+        return TeamDetailDtoMapper()
+    }
+
+    @Singleton
+    @Provides
     fun provideTeamRepository(
         api: EspnNbaApi,
         teamDtoMapper: TeamDtoMapper,
-    ) = TeamRepositoryImpl(api, teamDtoMapper) as ITeamRepository
+        teamDetailDtoMapper: TeamDetailDtoMapper,
+    ) = TeamRepositoryImpl(api, teamDtoMapper, teamDetailDtoMapper) as ITeamRepository
 
 
     @Provides
     fun provideGetAllTeamsUseCase(teamRepository: ITeamRepository): GetAllTeamsUseCase {
         return GetAllTeamsUseCase(teamRepository)
+    }
+
+    @Provides
+    fun provideGetTeamDetailUseCase(teamRepository: ITeamRepository): GetTeamDetailUseCase {
+        return GetTeamDetailUseCase(teamRepository)
     }
 
     @Singleton

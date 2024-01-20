@@ -47,9 +47,14 @@ class HomeViewModel @Inject constructor(
                                 currentState.copy(teams = teams.data, isLoading = false)
                             }
                         }
+
                         is Resource.Error -> {
                             _uiState.update { currentState ->
-                                currentState.copy(isError = true, errorText = errorTextConverterImpl.convert(teams.error), isLoading = false)
+                                currentState.copy(
+                                    isError = true,
+                                    errorText = errorTextConverterImpl.convert(teams.error),
+                                    isLoading = false
+                                )
                             }
                         }
                     }

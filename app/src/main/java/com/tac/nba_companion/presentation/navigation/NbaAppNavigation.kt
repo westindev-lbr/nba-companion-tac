@@ -131,13 +131,15 @@ fun NbaAppNavigation() {
                     }
                 }
 
-                val teamDetail by teamDetailViewModel.teamDetail.collectAsState()
+                val teamDetail by teamDetailViewModel.uiState.collectAsState()
 
-                teamDetail?.let { teamDetail ->
-                    TeamDetailScreen(
-                        team = teamDetail,
-                        navigateUp = { navController.navigateUp() },
-                    )
+                teamDetail.let { teamDetail ->
+                    teamDetail.team?.let { team ->
+                        TeamDetailScreen(
+                            team = team,
+                            navigateUp = { navController.navigateUp() },
+                        )
+                    }
                 }
 
             }

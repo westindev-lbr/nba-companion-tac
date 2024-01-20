@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailAppBar(title: String, color: String, altColor: String, onBackClick: () -> Unit) {
+fun DetailAppBar(title: String, color: Color, altColor: Color, onBackClick: () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Color(color = android.graphics.Color.parseColor(color)),
-            titleContentColor = Color(color = android.graphics.Color.parseColor(altColor)),
+            containerColor = color,
+            titleContentColor = altColor,
         ),
         title = {
             Text(
@@ -38,7 +38,7 @@ fun DetailAppBar(title: String, color: String, altColor: String, onBackClick: ()
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "back",
-                    tint = Color(color = android.graphics.Color.parseColor(altColor))
+                    tint = altColor
                 )
             }
         },

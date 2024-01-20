@@ -3,15 +3,18 @@ package com.tac.nba_companion.presentation.teamDetails
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -79,62 +83,77 @@ fun TeamHeader(team: TeamDetail) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Card(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize(),
+            colors = CardDefaults.cardColors(
+                containerColor = team.color,
+                contentColor = team.altColor
+            )
         ) {
-            Text(
-                text = "Nom: ${team.name}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-            Text(
-                text = "Id: ${team.id}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-            Text(
-                text = "Lieu: ${team.location}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-            Text(
-                text = "Pos.: ${team.currentRank}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                LabelAndData(label = "Id", text = team.id.toString())
+                LabelAndData(label = "Nom", text = team.name)
+                LabelAndData(label = "Lieu", text = team.location)
+                LabelAndData(label = "Rank.", text = team.currentRank)
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Card(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
+            colors = CardDefaults.cardColors(
+                containerColor = team.color,
+                contentColor = team.altColor
+            )
         )
 
         {
+            Column(
+                modifier = Modifier.padding(16.dp),
+            )
+            {
 
-            Text(
-                text = "Gym: ${team.venueName}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
-            Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = team.venueImg)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            transformations(RoundedCornersTransformation())
-                        }).build()
-                ),
-                contentDescription = "Coil Circular Image",
-                modifier = Modifier
-                    .size(300.dp)
-            )
-            Text(
-                text = "City: ${team.venueName}",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.Black
-            )
+
+                LabelAndData(label = "Stadium", text = team.venueName)
+                Spacer(modifier = Modifier.height(16.dp))
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current).data(data = team.venueImg)
+                            .apply(block = fun ImageRequest.Builder.() {
+                                transformations(RoundedCornersTransformation())
+                            }).build()
+                    ),
+                    contentDescription = "Coil Circular Image",
+                    modifier = Modifier
+                        .size(500.dp),
+                    alignment = Alignment.CenterEnd
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                LabelAndData(label = "Ville", text = team.location)
+            }
         }
     }
 }
+
+@Composable
+fun LabelAndData(label: String, text: String) {
+    Row {
+        Text(
+            text = "$label : ",
+            fontWeight = FontWeight.ExtraBold,
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+}
+
 
 @Preview
 @Composable
@@ -146,13 +165,13 @@ fun TeamDetailScreenPreview() {
         location = "Dallas",
         abbreviation = "DAL",
         logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-        color = "#c8102e",
-        altColor = "#fdb927",
+        color = Color(color = android.graphics.Color.parseColor("#c8102e")),
+        altColor = Color(color = android.graphics.Color.parseColor("#fdb927")),
         currentRank = "3rd in Southeast Division",
         venueName = "State Farm Arena",
         venueImg = "https://a.espncdn.com/i/venues/nba/day/1827.jpg"
     )
 
-    fun pwet(){}
-    TeamDetailScreen(team = team1, navigateUp = { pwet()})
+    fun pwet() {}
+    TeamDetailScreen(team = team1, navigateUp = { pwet() })
 }

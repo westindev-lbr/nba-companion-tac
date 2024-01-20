@@ -2,37 +2,48 @@ package com.tac.nba_companion.presentation.teamDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tac.nba_companion.domain.entities.TeamDetail
+import com.tac.nba_companion.core.common.Resource
+import com.tac.nba_companion.domain.usecases.GetTeamDetailUseCase
+import com.tac.nba_companion.presentation.common.IErrorTypeToErrorTextConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
-    // private val getTeamDetailUseCase: GetTeamDetailUseCase
+    private val getTeamDetailUseCase: GetTeamDetailUseCase,
+    private val errorTextConverterImpl: IErrorTypeToErrorTextConverter
 ) : ViewModel() {
 
-    private val _teamDetail = MutableStateFlow<TeamDetail?>(null)
-    val teamDetail: StateFlow<TeamDetail?> = _teamDetail.asStateFlow()
+    private val _uiState = MutableStateFlow(TeamDetailState())
+    val uiState: StateFlow<TeamDetailState> = _uiState.asStateFlow()
 
     fun loadTeamDetail(teamId: Int) {
         viewModelScope.launch {
-            val result = TeamDetail(
-                6,
-                "Dallas Mavericks",
-                location = "Dallas",
-                abbreviation = "DAL",
-                logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-                color = "#c8102e",
-                altColor = "#fdb927",
-                currentRank = "3rd in Southeast Division",
-                venueName = "State Farm Arena",
-                venueImg = "https://a.espncdn.com/i/venues/nba/day/1827.jpg"
-            )
-            _teamDetail.value = result
+            getTeamDetailUseCase(teamId = teamId)
+                .collect { team ->
+                    when (team) {
+                        is Resource.Success -> {
+                            _uiState.update { currentState ->
+                                currentState.copy(team = team.data, isLoading = false)
+                            }
+                        }
+
+                        is Resource.Error -> {
+                            _uiState.update { currentState ->
+                                currentState.copy(
+                                    isError = true,
+                                    errorText = errorTextConverterImpl.convert(team.error),
+                                    isLoading = false
+                                )
+                            }
+                        }
+                    }
+                }
         }
     }
 }
