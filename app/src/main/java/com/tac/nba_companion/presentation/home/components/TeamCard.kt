@@ -106,6 +106,75 @@ fun CardElevation(
 }
 
 
+@Composable
+fun CardGridElevation(
+    team: Team
+) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        shadowElevation = 10.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current).data(data = team.logo)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            transformations(CircleCropTransformation())
+                        }).build()
+                ),
+                contentDescription = "Coil Circular Image",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+            )
+
+            Spacer(modifier = Modifier.width(2.dp))
+
+            Surface(
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier.wrapContentSize(),
+                color = MaterialTheme.colorScheme.inverseSurface
+            ) {
+                Text(
+                    text = team.abbreviation,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+                )
+            }
+
+            Text(
+                text = team.name,
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = "Lieu : ${team.location}",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleSmall,
+            )
+
+
+        }
+    }
+}
+
+
 @Preview
 @Composable
 fun CardElevationPreviw() {
@@ -117,4 +186,18 @@ fun CardElevationPreviw() {
         logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png"
     )
     CardElevation(team = team1)
+}
+
+
+@Preview
+@Composable
+fun CardGridElevationPreview() {
+    val team1 = Team(
+        6,
+        "Dallas Mavericks",
+        location = "Dallas",
+        abbreviation = "DAL",
+        logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png"
+    )
+    CardGridElevation(team = team1)
 }

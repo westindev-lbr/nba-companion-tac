@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tac.nba_companion.R
+import com.tac.nba_companion.presentation.home.components.TeamsCardGrid
 import com.tac.nba_companion.presentation.home.components.TeamsCardList
 
 @Composable
@@ -36,7 +37,11 @@ fun HomeScreen(
     ) {
 
         if (!state.isError) {
-            TeamsCardList(teams = state.teams)
+            if (!state.isGridView) {
+                TeamsCardList(teams = state.teams)
+            } else {
+                TeamsCardGrid(teams = state.teams)
+            }
         } else {
             Column(
                 verticalArrangement = Arrangement.Center,

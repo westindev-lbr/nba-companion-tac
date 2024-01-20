@@ -56,4 +56,9 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
+
+    fun toggleGridView() {
+        val currentState = _uiState.value
+        _uiState.value = currentState.copy(isGridView = !currentState.isGridView)
+    }
 }

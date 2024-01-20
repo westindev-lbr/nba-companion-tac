@@ -12,5 +12,6 @@ data class HomeState(
     val teams: List<Team> = emptyList(),
     val isLoading: Boolean = true,
     val isError: Boolean = false,
-    val errorText: ErrorText? = null
+    val errorText: ErrorText? = null,
+    val isGridView: Boolean = false
 )
