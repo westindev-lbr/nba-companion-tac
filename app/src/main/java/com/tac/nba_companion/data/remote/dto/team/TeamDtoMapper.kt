@@ -13,4 +13,8 @@ class TeamDtoMapper : DomainMapper<TeamDto, Team> {
             logo = model.logos.first().href,
         )
     }
+
+    fun toDomainList(initial: List<TeamDto>): List<Team> {
+        return initial.map { mapToDomainEntity(it) }
+    }
 }

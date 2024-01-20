@@ -24,16 +24,26 @@ class TeamRepositoryImpl @Inject constructor(
         // Flow pour collecter les données de façon asynchrone
         return flow {
             try {
-
                 val response = api.fetchTeamsData()
-                TODO("Not yet implemented")
-                // Analyser les données pour cibler les bonnes données à récupérer pour le DTO
-                // Mapper le Dto en Entité du domaine
-                // Emettre la réponse
-                // Gérer les cas d'érreurs
-
+                // Le type Response de Retrofit permet d'encapsuler une réponse HTTP
+                if (response.isSuccessful) {
+                    // Chaînage de data pour cibler les TeamElement et
+                    // les transformer en TeamDto à l'aide de map
+                    val teamListDto =
+                        response.body()!!.sports[0].leagues[0].teams.map { t -> t.team }
+                    // teamListDto.map {   Log.d("myDebugApiData", it.toString())}
+                    // Mapper le Dto en Entité du domaine
+                    val teams = teamDtoMapper.toDomainList(teamListDto)
+                    //Log.d("myDebugTeams", teams.toString())
+                    // Emettre la réponse
+                    emit(Resource.Success(teams))
+                } else {
+                    // Gérer les cas d'érreurs
+                    TODO("Not yet implemented")
+                }
             } catch (e: Exception) {
                 // Gstion exception
+                TODO("Not yet implemented")
             }
         }
     }
