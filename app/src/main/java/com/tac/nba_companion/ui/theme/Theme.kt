@@ -6,20 +6,36 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xFFBB86FC),       // Un violet doux
+    onPrimary = Color(0xFF000000),     // Noir pour le texte sur fond violet
+    secondary = Color(0xFF03DAC5),     // Cyan vibrant
+    onSecondary = Color(0xFF000000),   // Noir pour le texte sur fond cyan
+    tertiary = Color(0xFF03DAC5),      // Un autre ton de bleu ou cyan
+    onTertiary = Color(0xFF000000),    // Noir pour le texte sur fond tertiary
+    background = Color(0xFF121212),    // Arrière-plan très sombre
+    onBackground = Color(0xFFFFFFFF),  // Blanc pour le texte sur l'arrière-plan sombre
+    surface = Color(0xFF1F1B24),       // Gris foncé pour les surfaces
+    onSurface = Color(0xFFFFFFFF),     // Blanc pour le texte sur les surfaces grises
+    error = Color(0xFFCF6679),         // Rouge pour les erreurs
+    onError = Color(0xFF000000)        // Noir pour le texte sur fond rouge
 )
+
+//private val DarkColorScheme = darkColorScheme(
+//    primary = Purple80,
+//    secondary = PurpleGrey80,
+//    tertiary = Pink80
+//)
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
@@ -44,15 +60,13 @@ fun NbaCompanionTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    // Forcer l'utilisation du thème sombre, indépendamment des préférences du système
+    val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        dynamicDarkColorScheme(LocalContext.current)
+    } else {
+        DarkColorScheme
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
