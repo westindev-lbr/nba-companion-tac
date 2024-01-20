@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -101,9 +103,12 @@ fun NbaAppNavigation() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.HomeScreen.route) {
-                val viewModel: HomeViewModel = viewModel()
-                HomeScreen(teams = viewModel.teamsList)
+                val viewModel: HomeViewModel = hiltViewModel()
+                // Collecte de l'état à passer à la vue
+                val teamsState = viewModel.uiState.collectAsState().value
+                HomeScreen(state = teamsState)
             }
+
 
             composable(route = Route.StandingsScreen.route) {
                 val viewModel: StandingsViewModel = viewModel()

@@ -2,22 +2,30 @@ package com.tac.nba_companion.presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.tac.nba_companion.domain.entities.Team
+import androidx.compose.ui.unit.sp
+import com.tac.nba_companion.R
 import com.tac.nba_companion.presentation.home.components.TeamsCardList
 
 @Composable
 fun HomeScreen(
-    teams: List<Team>
-)
-{
+    state: HomeState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -26,17 +34,30 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TeamsCardList(teams = teams)
+
+        if (!state.isError) {
+            TeamsCardList(teams = state.teams)
+        } else {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ico_error),
+                    contentDescription = null,
+                    tint = Color.Red,
+                    modifier = Modifier.size(64.dp)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = state.errorText!!.asString(),
+                    textAlign = TextAlign.Center,
+                    color = Color.Red,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+        }
     }
-
-}
-
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    val team1 = Team(6, "Dallas Mavericks", location = "Dallas", abbreviation = "DAL", logo = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png" )
-    val team2 = Team(5, "Cleveland Cavaliers", location = "Cleveland", abbreviation = "CLE", logo = "https://a.espncdn.com/i/teamlogos/nba/500/cle.png" )
-    val teamsList: List<Team> = listOf(team1, team2)
-    HomeScreen(teams =teamsList )
 }
