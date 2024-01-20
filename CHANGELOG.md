@@ -1,5 +1,16 @@
 # Changelog NBA Companion
 
+## [0.4.0] - 20-01-2023
+### Modifié
+- HomeScreen, HomeViewModel, NbaAppNavigation
+### Ajouté
+- Ajout du cas d'usage GetAllTeams (récupération des équipes NBA)
+- Ajout TeamRepository pour la logique de communication avec l'api
+- Ajout des différents états pour la vue
+- Ajout des DTO et mapper correspondant
+- Ajout d'une gestion des érreurs de l'appel API à la vue
+- Ajout du module d'injection de dépdences et des différents services requis avec le cas d'usage
+
 ## [0.3.0] - 15-01-2023
 ### Modifié
 - Changement de version de compilateur et jvm (1.8 pour 17)
