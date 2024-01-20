@@ -53,11 +53,11 @@ fun BottomNavigation(
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.primary,
-                    unselectedIconColor = colorResource(id = R.color.purple_200),
+                    selectedIconColor = MaterialTheme.colorScheme.onSurface,
+                    selectedTextColor = MaterialTheme.colorScheme.primaryContainer,
+                    unselectedIconColor = MaterialTheme.colorScheme.primary,
                     unselectedTextColor = colorResource(id = R.color.purple_200),
-                    indicatorColor = MaterialTheme.colorScheme.background,
+                    indicatorColor = MaterialTheme.colorScheme.primaryContainer
                 )
 
             )

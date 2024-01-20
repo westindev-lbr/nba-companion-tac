@@ -21,7 +21,7 @@ fun NbaTopAppBar(title: String, isGridView: Boolean,  onToggleGridView: () -> Un
     // État pour le toggle
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.background,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = { Text(title) },

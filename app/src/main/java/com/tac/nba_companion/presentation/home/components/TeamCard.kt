@@ -39,7 +39,7 @@ fun CardElevation(
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier
             .padding(10.dp)
             .clickable { onClick?.invoke() },
@@ -106,7 +106,7 @@ fun CardGridElevation(
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier
             .padding(10.dp)
             .clickable { onClick?.invoke() },
