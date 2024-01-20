@@ -5,7 +5,9 @@ import com.tac.nba_companion.core.common.Resource
 import com.tac.nba_companion.core.util.ApiErrorHandler
 import com.tac.nba_companion.data.remote.EspnNbaApi
 import com.tac.nba_companion.data.remote.dto.team.TeamDtoMapper
+import com.tac.nba_companion.data.remote.dto.teamdetail.TeamDetailDtoMapper
 import com.tac.nba_companion.domain.entities.Team
+import com.tac.nba_companion.domain.entities.TeamDetail
 import com.tac.nba_companion.domain.repository.ITeamRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +21,8 @@ import javax.inject.Inject
  */
 class TeamRepositoryImpl @Inject constructor(
     private val api: EspnNbaApi,
-    private val teamDtoMapper: TeamDtoMapper
+    private val teamDtoMapper: TeamDtoMapper,
+    private val teamDetailDtoMapper: TeamDetailDtoMapper,
 ) : ITeamRepository {
 
     override fun getTeamsCollection(): Flow<Resource<List<Team>>> {
@@ -46,6 +49,23 @@ class TeamRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 // Gstion exception
                 //Log.d("myErrorDebug", e.message.toString())
+                emit(Resource.Error(ErrorType.Api.Network))
+            }
+        }
+    }
+
+    override fun getTeamDetail(id: Int): Flow<Resource<TeamDetail>> {
+        return flow {
+            try {
+                val response = api.fetchTeam(id.toString())
+                if (response.isSuccessful) {
+                    val teamDetailDto = response.body()!!.team
+                    val team = teamDetailDtoMapper.mapToDomainEntity(teamDetailDto)
+                    emit(Resource.Success(team))
+                } else {
+                    emit(ApiErrorHandler.handleErrorResponse(response))
+                }
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorType.Api.Network))
             }
         }

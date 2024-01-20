@@ -1,4 +1,4 @@
-package com.tac.nba_companion.presentation.navigation.components
+package com.tac.nba_companion.presentation.home.components
 
 import android.content.res.Configuration
 import androidx.compose.material3.ExperimentalMaterial3Api

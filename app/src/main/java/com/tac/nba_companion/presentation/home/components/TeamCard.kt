@@ -1,12 +1,12 @@
 package com.tac.nba_companion.presentation.home.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -34,12 +34,15 @@ import com.tac.nba_companion.domain.entities.Team
 
 @Composable
 fun CardElevation(
-    team: Team
+    team: Team,
+    onClick: (() -> Unit)? = null
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
-        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .clickable { onClick?.invoke() },
         shadowElevation = 10.dp
     ) {
         Row(
@@ -90,16 +93,6 @@ fun CardElevation(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                Text(
-                    text = "Lieu : ${team.location}",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleSmall,
-                )
-
             }
         }
     }
@@ -108,12 +101,15 @@ fun CardElevation(
 
 @Composable
 fun CardGridElevation(
-    team: Team
+    team: Team,
+    onClick: (() -> Unit)? = null
 ) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
-        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .clickable { onClick?.invoke() },
         shadowElevation = 10.dp
     ) {
         Column(
@@ -159,17 +155,6 @@ fun CardGridElevation(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
             )
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            Text(
-                text = "Lieu : ${team.location}",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleSmall,
-            )
-
-
         }
     }
 }
