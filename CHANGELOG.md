@@ -1,5 +1,14 @@
 # Changelog NBA Companion
 
+## [0.5.0] - 20-01-2023
+### Modifié
+- HomeScreen, HomeViewModel, NbaAppNavigation, HomeState
+### Ajouté
+- Ajout fonctionnalité changement de vue (grille || liste) via un bouton toggle sur la TopAppBar
+- Nouvelles icones pour le bouton toggle
+- Component Card pour la vue en grille
+- Ajout nouvel état dans le HomeState : isGridView 
+
 ## [0.4.0] - 20-01-2023
 ### Modifié
 - HomeScreen, HomeViewModel, NbaAppNavigation
